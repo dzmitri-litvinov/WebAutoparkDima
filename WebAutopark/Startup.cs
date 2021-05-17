@@ -8,6 +8,8 @@ using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebAutopark.Repositories;
+using WebAutopark.Interfaces;
 
 namespace WebAutopark
 {
@@ -23,6 +25,10 @@ namespace WebAutopark
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string connectionString = "Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=WebAutoparkDB;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+            services.AddTransient<IRepository<VehicleType>, VehicleTypesRepository>(provider => new VehicleTypesRepository(connectionString));
+            services.AddTransient<IRepository<Vehicle>, VehicleRepository>(provider => new VehicleRepository(connectionString));
+            services.AddTransient<IRepository<SparePart>, SparePartsRepository>(provider => new SparePartsRepository(connectionString));
             services.AddControllersWithViews();
         }
 
