@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebAutopark
+namespace WebAutopark.DAL.Entities
 {
-    public class Vehicle : IComparable<Vehicle>
+    public class Vehicle
     {
         private const double TaxWeightCoeff = 0.0013;
         public int Id { get; set; }
@@ -22,24 +22,5 @@ namespace WebAutopark
         public double EngineCapacity { get; set; }
         public double Consumption { get; set; }
         public double FuelTankOrBattery { get; set; }
-        
-        public Vehicle()
-        {
-
-        }
-        
-        public double GetCalcTaxPerMonth()
-        {
-            return WeightKg * TaxWeightCoeff + VehicleType.TaxCoefficient * 30 + 5;
-        }
-
-        public double GetMaxKm()
-        {
-            return FuelTankOrBattery / Consumption;
-        }
-        public int CompareTo(Vehicle other)
-        {
-            return GetCalcTaxPerMonth().CompareTo(other.GetCalcTaxPerMonth());
-        }
     }
 }

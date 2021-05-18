@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WebAutopark
+namespace WebAutopark.DAL.Entities
 {
     public enum Color
     {

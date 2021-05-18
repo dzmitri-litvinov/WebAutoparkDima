@@ -1,61 +1,60 @@
-﻿using Dapper;
-using Microsoft.Data.SqlClient;
-using System;
-using System.Data;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using WebAutopark.Interfaces;
+using System.Data;
+using Dapper;
+using Microsoft.Data.SqlClient;
 
-namespace WebAutopark.Repositories
+namespace WebAutopark.DAL.Repositories
 {
-    public class SparePartsRepository : IRepository<SparePart>
+    public abstract class BaseRepository<T>
     {
         string connectionString = null;
-        public SparePartsRepository(string conn)
+        protected BaseRepository(string conn)
         {
             connectionString = conn;
         }
-
-        public void Create(SparePart instance)
+        protected void CreateBase(T instance, string sqlQueryString)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var sqlQuery = "INSERT INTO SpareParts (PartName) VALUES(@PartName)";
+                var sqlQuery = sqlQueryString;
                 db.Execute(sqlQuery, instance);
             }
         }
 
-        public void Delete(int id)
+        protected void DeleteBase(int id, string sqlQueryString)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var sqlQuery = "DELETE FROM SpareParts WHERE Id = @id";
+                var sqlQuery = sqlQueryString;
                 db.Execute(sqlQuery, new { id });
             }
         }
 
-        public SparePart Get(int id)
+        protected T GetByIdBase(int id, string sqlQueryString)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                return db.Query<SparePart>("SELECT * FROM SpareParts WHERE Id = @id", new { id }).FirstOrDefault();
+                return db.Query<T>(sqlQueryString, new { id }).FirstOrDefault();
             }
         }
 
-        public List<SparePart> GetAll()
+        protected IEnumerable<T> GetAllBase(string sqlQueryString)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                return db.Query<SparePart>("SELECT * FROM SpareParts").ToList();
+                return db.Query<T>(sqlQueryString).ToList();
             }
         }
 
-        public void Update(SparePart instance)
+        protected void UpdateBase(T instance, string sqlQueryString)
         {
             using (IDbConnection db = new SqlConnection(connectionString))
             {
-                var sqlQuery = "UPDATE SpareParts SET PartName = @PartName WHERE Id = @Id";
+                var sqlQuery = sqlQueryString;
                 db.Execute(sqlQuery, instance);
             }
         }

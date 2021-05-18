@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace WebAutopark
+namespace WebAutopark.DAL.Entities
 {
     public class SparePart
     {
