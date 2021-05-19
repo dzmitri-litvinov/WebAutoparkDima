@@ -10,11 +10,6 @@ namespace WebAutopark.DAL.Entities
     {
         public int Id { get; set; }
         public string TypeName { get; set; }
-        public float TaxCoefficient { get; set; }       
-
-        public VehicleType()
-        {
-
-        }
+        public float TaxCoefficient { get; set; }  
     }
 }
