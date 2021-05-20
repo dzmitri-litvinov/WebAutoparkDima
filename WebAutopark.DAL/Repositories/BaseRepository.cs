@@ -9,54 +9,22 @@ using Microsoft.Data.SqlClient;
 
 namespace WebAutopark.DAL.Repositories
 {
-    public abstract class BaseRepository<T>
+    public abstract class BaseRepository : IDisposable, IAsyncDisposable
     {
-        string connectionString = null;
-        protected BaseRepository(string conn)
+        protected readonly DbConnection connection;
+        protected BaseRepository(IConnectionProvider connectionProvider)
         {
-            connectionString = conn;
+            connection = connectionProvider.GetConnection();
         }
-        protected void CreateBase(T instance, string sqlQueryString)
+        
+        public void Dispose()
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                var sqlQuery = sqlQueryString;
-                db.Execute(sqlQuery, instance);
-            }
+            connection?.Dispose();
         }
 
-        protected void DeleteBase(int id, string sqlQueryString)
+        public ValueTask DisposeAsync()
         {
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                var sqlQuery = sqlQueryString;
-                db.Execute(sqlQuery, new { id });
-            }
-        }
-
-        protected T GetByIdBase(int id, string sqlQueryString)
-        {
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                return db.Query<T>(sqlQueryString, new { id }).FirstOrDefault();
-            }
-        }
-
-        protected IEnumerable<T> GetAllBase(string sqlQueryString)
-        {
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                return db.Query<T>(sqlQueryString).ToList();
-            }
-        }
-
-        protected void UpdateBase(T instance, string sqlQueryString)
-        {
-            using (IDbConnection db = new SqlConnection(connectionString))
-            {
-                var sqlQuery = sqlQueryString;
-                db.Execute(sqlQuery, instance);
-            }
+            return connection.DisposeAsync();
         }
     }
 }
