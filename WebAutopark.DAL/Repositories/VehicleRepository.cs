@@ -20,8 +20,10 @@ namespace WebAutopark.DAL.Repositories
         private const string sqlQueryUpdateString = "UPDATE VehicleTypes SET VehicleTypeId = @VehicleTypeId, ModelName = @ModelName, " +
             "RegistrationNumber = @RegistrationNumber, WeightKg = @WeightKg, ManufactureYear = @ManufactureYear, MileageKm = @MileageKm, Color = @Color, " +
             "Engine = @Engine, EngineCapacity = @EngineCapacity, Consumption = @Consumption, FuelTankOrBattery = @FuelTankOrBattery WHERE Id = @Id";
+        
         public VehicleRepository(string conn) : base(conn)
         { }
+
         public void Create(Vehicle instance)
         {
             connection.Execute(sqlQueryCreateString, instance);
@@ -39,7 +41,7 @@ namespace WebAutopark.DAL.Repositories
 
         public Vehicle GetById(int id)
         {
-            return connection.QueryFirst<Vehicle>(sqlQueryGetByIdString, new { id }); ;
+            return connection.QueryFirst<Vehicle>(sqlQueryGetByIdString, new { id });
         }
 
         public void Update(Vehicle instance)

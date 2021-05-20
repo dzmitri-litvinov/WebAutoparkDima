@@ -14,6 +14,7 @@ namespace WebAutopark.DAL.Repositories
     public abstract class RepositoryBase : IDisposable, IAsyncDisposable
     {
         protected readonly DbConnection connection;
+
         protected RepositoryBase(string connectionString)
         {
             connection = new SqlConnection(connectionString);

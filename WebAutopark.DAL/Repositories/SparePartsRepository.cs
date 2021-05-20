@@ -16,8 +16,10 @@ namespace WebAutopark.DAL.Repositories
         private const string sqlQueryGetAllString = "SELECT * FROM SpareParts";
         private const string sqlQueryGetByIdString = "SELECT * FROM SpareParts WHERE Id = @id";
         private const string sqlQueryUpdateString = "UPDATE SpareParts SET PartName = @PartName WHERE Id = @Id";
+        
         public SparePartsRepository(string conn) : base(conn)
         {   }
+
         public void Create(SparePart instance)
         {
             connection.Execute(sqlQueryCreateString, instance);
@@ -35,7 +37,7 @@ namespace WebAutopark.DAL.Repositories
 
         public SparePart GetById(int id)
         {
-            return connection.QueryFirst<SparePart>(sqlQueryGetByIdString, new { id }); ;
+            return connection.QueryFirst<SparePart>(sqlQueryGetByIdString, new { id });
         }
 
         public void Update(SparePart instance)

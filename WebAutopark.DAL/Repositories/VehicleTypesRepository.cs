@@ -16,8 +16,10 @@ namespace WebAutopark.DAL.Repositories
         private const string sqlQueryGetAllString = "SELECT * FROM VehicleTypes";
         private const string sqlQueryGetByIdString = "SELECT * FROM VehicleTypes WHERE Id = @id";
         private const string sqlQueryUpdateString = "UPDATE VehicleTypes SET TypeName = @TypeName, TaxCoefficient = @TaxCoefficient WHERE Id = @Id";
+        
         public VehicleTypesRepository(string conn) : base(conn)
         { }
+        
         public void Create(VehicleType instance)
         {
             connection.Execute(sqlQueryCreateString, instance);
@@ -35,7 +37,7 @@ namespace WebAutopark.DAL.Repositories
 
         public VehicleType GetById(int id)
         {
-            return connection.QueryFirst<VehicleType>(sqlQueryGetByIdString, new { id }); ;
+            return connection.QueryFirst<VehicleType>(sqlQueryGetByIdString, new { id });
         }
 
         public void Update(VehicleType instance)
