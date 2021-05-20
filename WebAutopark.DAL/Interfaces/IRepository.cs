@@ -7,10 +7,10 @@ namespace WebAutopark.DAL.Interfaces
 {
     public interface IRepository<T> where T : class
     {
-        Task Create(T instance);
-        Task Delete(int id);
-        Task<T> GetById(int id);
-        Task<IEnumerable<T>> GetAll();
-        Task Update(T instance);
+        void Create(T instance);
+        void Delete(int id);
+        T GetById(int id);
+        IEnumerable<T> GetAll();
+        void Update(T instance);
     }
 }
