@@ -6,15 +6,17 @@ using System.Threading.Tasks;
 using System.Data;
 using Dapper;
 using Microsoft.Data.SqlClient;
+using System.Data.Common;
+
 
 namespace WebAutopark.DAL.Repositories
 {
-    public abstract class BaseRepository : IDisposable, IAsyncDisposable
+    public abstract class RepositoryBase : IDisposable, IAsyncDisposable
     {
         protected readonly DbConnection connection;
-        protected BaseRepository(IConnectionProvider connectionProvider)
+        protected RepositoryBase(string connectionString)
         {
-            connection = connectionProvider.GetConnection();
+            connection = new SqlConnection(connectionString);
         }
         
         public void Dispose()

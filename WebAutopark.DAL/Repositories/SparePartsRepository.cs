@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using WebAutopark.DAL.Entities;
 using WebAutopark.DAL.Interfaces;
+using Dapper;
 
 namespace WebAutopark.DAL.Repositories
 {
-    public class SparePartsRepository : BaseRepository<SparePart>, IRepository<SparePart>
+    public class SparePartsRepository : RepositoryBase, IRepository<SparePart>
     {
         private const string sqlQueryCreateString = "INSERT INTO SpareParts (PartName) VALUES(@PartName)";
         private const string sqlQueryDeleteString = "DELETE FROM SpareParts WHERE Id = @id";
@@ -17,29 +18,29 @@ namespace WebAutopark.DAL.Repositories
         private const string sqlQueryUpdateString = "UPDATE SpareParts SET PartName = @PartName WHERE Id = @Id";
         public SparePartsRepository(string conn) : base(conn)
         {   }
-        public async Task Create(SparePart instance)
+        public void Create(SparePart instance)
         {
-            CreateBase(instance, sqlQueryCreateString);
+            connection.Execute(sqlQueryCreateString, instance);
         }
 
-        public async Task Delete(int id)
+        public void Delete(int id)
         {
-            DeleteBase(id, sqlQueryDeleteString);
+            connection.Execute(sqlQueryDeleteString, new { id });
         }
 
-        public async Task<IEnumerable<SparePart>> GetAll()
+        public IEnumerable<SparePart> GetAll()
         {
-            return GetAllBase(sqlQueryGetAllString);
+            return connection.Query<SparePart>(sqlQueryGetAllString);
         }
 
-        public async Task<SparePart> GetById(int id)
+        public SparePart GetById(int id)
         {
-            return GetByIdBase(id, sqlQueryGetByIdString);
+            return connection.QueryFirst<SparePart>(sqlQueryGetByIdString, new { id }); ;
         }
 
-        public async Task Update(SparePart instance)
+        public void Update(SparePart instance)
         {
-            UpdateBase(instance, sqlQueryUpdateString);
+            connection.Execute(sqlQueryUpdateString, instance);
         }
     }
 }

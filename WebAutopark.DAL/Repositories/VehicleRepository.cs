@@ -5,10 +5,11 @@ using System.Text;
 using System.Threading.Tasks;
 using WebAutopark.DAL.Entities;
 using WebAutopark.DAL.Interfaces;
+using Dapper;
 
 namespace WebAutopark.DAL.Repositories
 {
-    public class VehicleRepository : BaseRepository<Vehicle>, IRepository<Vehicle>
+    public class VehicleRepository : RepositoryBase, IRepository<Vehicle>
     {
         private const string sqlQueryCreateString = "INSERT INTO Vehicles (VehicleTypeId, ModelName, RegistrationNumber, WeightKg, " +
             "ManufactureYear, MileageKm, Color, Engine, EngineCapacity, Consumption, FuelTankOrBattery) VALUES(@VehicleTypeId, " +
@@ -21,29 +22,29 @@ namespace WebAutopark.DAL.Repositories
             "Engine = @Engine, EngineCapacity = @EngineCapacity, Consumption = @Consumption, FuelTankOrBattery = @FuelTankOrBattery WHERE Id = @Id";
         public VehicleRepository(string conn) : base(conn)
         { }
-        public async Task Create(Vehicle instance)
+        public void Create(Vehicle instance)
         {
-            CreateBase(instance, sqlQueryCreateString);
+            connection.Execute(sqlQueryCreateString, instance);
         }
 
-        public async Task Delete(int id)
+        public void Delete(int id)
         {
-            DeleteBase(id, sqlQueryDeleteString);
+            connection.Execute(sqlQueryDeleteString, new { id });
         }
 
-        public async Task<IEnumerable<Vehicle>> GetAll()
+        public IEnumerable<Vehicle> GetAll()
         {
-            return GetAllBase(sqlQueryGetAllString);
+            return connection.Query<Vehicle>(sqlQueryGetAllString);
         }
 
-        public async Task<Vehicle> GetById(int id)
+        public Vehicle GetById(int id)
         {
-            return GetByIdBase(id, sqlQueryGetByIdString);
+            return connection.QueryFirst<Vehicle>(sqlQueryGetByIdString, new { id }); ;
         }
 
-        public async Task Update(Vehicle instance)
+        public void Update(Vehicle instance)
         {
-            UpdateBase(instance, sqlQueryUpdateString);
+            connection.Execute(sqlQueryUpdateString, instance);
         }
     }
 }
