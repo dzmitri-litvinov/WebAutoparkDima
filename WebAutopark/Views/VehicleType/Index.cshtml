@@ -1,0 +1,34 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a asp-controller="VehicleType" asp-action="Create">Create</a>
+
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">TypetName</th>
+            <th scope="col">TaxCoefficient</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var vehicleType in Model)
+        {
+            <tr>
+                <td>@vehicleType.Id</td>
+                <td>@vehicleType.TypeName</td>
+                <td>@vehicleType.TaxCoefficient</td>
+                <td>
+                    <a asp-controller="VehicleType" asp-action="Delete" asp-route-id="@vehicleType.Id">Delete</a>
+                    <a asp-controller="VehicleType" asp-action="Update" asp-route-id="@vehicleType.Id">Update</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

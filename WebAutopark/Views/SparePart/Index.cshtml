@@ -1,0 +1,31 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a asp-controller="SparePart" asp-action="Create">Create</a>    
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">PartName</th>
+            <th scope="col">Actions</th>        
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var part in Model)
+         {
+            <tr>
+                <td>@part.Id</td>
+                <td>@part.PartName</td>
+                <td>
+                    <a asp-controller="SparePart" asp-action="Delete" asp-route-id="@part.Id">Delete</a>
+                    <a asp-controller="SparePart" asp-action="Update" asp-route-id="@part.Id">Update</a>
+                </td>                
+            </tr>
+         }        
+    </tbody>
+</table>

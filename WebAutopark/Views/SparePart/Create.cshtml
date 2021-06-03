@@ -1,0 +1,18 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model WebAutopark.DAL.Entities.SparePart
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a asp-controller="SparePart" asp-action="Index">BackToIndex</a>
+</div>
+
+@using (Html.BeginForm("Create", "SparePart", FormMethod.Post))
+{
+    <label>PartName:</label>
+    <br />
+    @Html.TextBoxFor(e => e.PartName)
+    <br />
+    <input type="submit" value="Create" />
+}

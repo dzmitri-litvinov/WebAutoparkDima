@@ -1,0 +1,22 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@model WebAutopark.DAL.Entities.VehicleType
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a asp-controller="VehicleType" asp-action="Index">BackToIndex</a>
+</div>
+
+@using (Html.BeginForm("Create", "VehicleType", FormMethod.Post))
+{
+    <label>TypeName:</label>
+    <br />
+    @Html.TextBoxFor(e => e.TypeName)
+    <br />
+    <label>TaxCoefficient:</label>
+    <br />
+    @Html.TextBoxFor(e => e.TaxCoefficient)
+    <br />
+    <input type="submit" value="Create" />
+}
