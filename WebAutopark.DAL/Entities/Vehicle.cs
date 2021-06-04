@@ -11,11 +11,11 @@ namespace WebAutopark.DAL.Entities
         private const double TaxWeightCoeff = 0.0013;
         public int Id { get; set; }
         public int VehicleTypeId { get; set; }
-        public VehicleType VehicleType { get; }
-        public string ModelName { get; }
-        public string RegistrationNumber { get; }
-        public double WeightKg { get; }
-        public int ManufactureYear { get; }
+        public VehicleType VehicleType { get; set; }
+        public string ModelName { get; set; }
+        public string RegistrationNumber { get; set; }
+        public double WeightKg { get; set; }
+        public int ManufactureYear { get; set; }
         public double MileageKm { get; set; }
         public Color Color { get; set; }
         public string Engine { get; set; }

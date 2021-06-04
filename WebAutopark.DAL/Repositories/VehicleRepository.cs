@@ -17,7 +17,7 @@ namespace WebAutopark.DAL.Repositories
         private const string sqlQueryDeleteString = "DELETE FROM Vehicles WHERE Id = @id";
         private const string sqlQueryGetAllString = "SELECT * FROM Vehicles";
         private const string sqlQueryGetByIdString = "SELECT * FROM Vehicles WHERE Id = @id";
-        private const string sqlQueryUpdateString = "UPDATE VehicleTypes SET VehicleTypeId = @VehicleTypeId, ModelName = @ModelName, " +
+        private const string sqlQueryUpdateString = "UPDATE Vehicles SET VehicleTypeId = @VehicleTypeId, ModelName = @ModelName, " +
             "RegistrationNumber = @RegistrationNumber, WeightKg = @WeightKg, ManufactureYear = @ManufactureYear, MileageKm = @MileageKm, Color = @Color, " +
             "Engine = @Engine, EngineCapacity = @EngineCapacity, Consumption = @Consumption, FuelTankOrBattery = @FuelTankOrBattery WHERE Id = @Id";
         

@@ -1,0 +1,59 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+@using WebAutopark.DAL.Entities
+@model WebAutopark.DAL.Entities.Vehicle
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a asp-controller="Vehicle" asp-action="Index">BackToIndex</a>
+</div>
+
+@using (Html.BeginForm("Create", "Vehicle", FormMethod.Post))
+{
+    <label>VehicleType:</label>
+    <br />
+    @Html.DropDownListFor(e => e.VehicleTypeId, (SelectList)ViewBag.vehicleTypes)
+    <br />
+    <label>ModelName:</label>
+    <br />
+    @Html.TextBoxFor(e => e.ModelName)
+    <br />
+    <label>RegNumber:</label>
+    <br />
+    @Html.TextBoxFor(e => e.RegistrationNumber)
+    <br />
+    <label>WeightKg:</label>
+    <br />
+    @Html.TextBoxFor(e => e.WeightKg)
+    <br />
+    <label>ManufYear:</label>
+    <br />
+    @Html.TextBoxFor(e => e.ManufactureYear)
+    <br />
+    <label>MileageKm:</label>
+    <br />
+    @Html.TextBoxFor(e => e.MileageKm)
+    <br />
+    <label>Color:</label>
+    <br />
+    @Html.DropDownListFor(e => e.Color, Html.GetEnumSelectList(typeof(Color)))
+    <br />
+    <label>Engine:</label>
+    <br />
+    @Html.TextBoxFor(e => e.Engine)
+    <br />
+    <label>EngineCapacity:</label>
+    <br />
+    @Html.TextBoxFor(e => e.EngineCapacity)
+    <br />
+    <label>Consumption:</label>
+    <br />
+    @Html.TextBoxFor(e => e.Consumption)
+    <br />
+    <label>FuelTankOrBattery:</label>
+    <br />
+    @Html.TextBoxFor(e => e.FuelTankOrBattery)
+    <br />
+    <input type="submit" value="Create" />
+}
