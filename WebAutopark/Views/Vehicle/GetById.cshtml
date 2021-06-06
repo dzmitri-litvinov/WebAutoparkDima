@@ -8,6 +8,7 @@
             <th scope="col">Id</th>
             <th scope="col">ModelName</th>
             <th scope="col">VehicleType</th>
+            <th scope="col">TaxCoeff</th>
             <th scope="col">RegNumber</th>
             <th scope="col">Color</th>
         </tr>
@@ -19,6 +20,7 @@
             <td>@Model.Id</td>
             <td>@Model.ModelName</td>
             <td>@Model.VehicleType.TypeName</td>
+            <td>@Model.VehicleType.TaxCoefficient</td>
             <td>@Model.RegistrationNumber</td>
             <td>@Model.Color</td>
         </tr>

@@ -23,12 +23,6 @@ namespace WebAutopark.Controllers
         {
             var vehicles = _vehicleRepository.GetAll();
 
-            foreach (var vehicle in vehicles)
-            {
-                int vehicleTypeId = vehicle.VehicleTypeId;
-                vehicle.VehicleType = _vehicleTypeRepository.GetById(vehicleTypeId);
-            }
-
             return View(vehicles);
         }
         

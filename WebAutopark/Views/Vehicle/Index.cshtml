@@ -12,6 +12,7 @@
             <th scope="col">Id</th>
             <th scope="col">ModelName</th>
             <th scope="col">VehicleType</th>
+            <th scope="col">MileageKm</th>
         </tr>
     </thead>
 
@@ -22,9 +23,10 @@
                 <td>@velicle.Id</td>
                 <td>@velicle.ModelName</td>
                 <td>@velicle.VehicleType.TypeName</td>
+                <td>@velicle.MileageKm</td>
                 <td>
-                    <a asp-controller="Vehicle" asp-action="Delete" asp-route-id="@velicle.Id">Delete</a>
-                    <a asp-controller="Vehicle" asp-action="Update" asp-route-id="@velicle.Id">Update</a>
+                    <a asp-controller="Vehicle" asp-action="Delete" asp-route-id="@velicle.Id">Delete</a> |
+                    <a asp-controller="Vehicle" asp-action="Update" asp-route-id="@velicle.Id">Update</a> |
                     <a asp-controller="Vehicle" asp-action="GetById" asp-route-id="@velicle.Id">GetById</a>
                 </td>
             </tr>

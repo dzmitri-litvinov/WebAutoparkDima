@@ -15,7 +15,7 @@ namespace WebAutopark.DAL.Repositories
             "ManufactureYear, MileageKm, Color, Engine, EngineCapacity, Consumption, FuelTankOrBattery) VALUES(@VehicleTypeId, " +
             "@ModelName, @RegistrationNumber, @WeightKg, @ManufactureYear, @MileageKm, @Color, @Engine, @EngineCapacity, @Consumption, @FuelTankOrBattery)";
         private const string sqlQueryDeleteString = "DELETE FROM Vehicles WHERE Id = @id";
-        private const string sqlQueryGetAllString = "SELECT * FROM Vehicles";
+        private const string sqlQueryGetAllString = "SELECT V.*, VT.Id VTID, VT.TypeName, VT.TaxCoefficient FROM Vehicles V INNER JOIN VehicleTypes VT ON V.VehicleTypeId = VT.Id";
         private const string sqlQueryGetByIdString = "SELECT * FROM Vehicles WHERE Id = @id";
         private const string sqlQueryUpdateString = "UPDATE Vehicles SET VehicleTypeId = @VehicleTypeId, ModelName = @ModelName, " +
             "RegistrationNumber = @RegistrationNumber, WeightKg = @WeightKg, ManufactureYear = @ManufactureYear, MileageKm = @MileageKm, Color = @Color, " +
@@ -35,8 +35,13 @@ namespace WebAutopark.DAL.Repositories
         }
 
         public IEnumerable<Vehicle> GetAll()
-        {
-            return connection.Query<Vehicle>(sqlQueryGetAllString);
+        {            
+            return connection.Query<Vehicle, VehicleType, Vehicle>(sqlQueryGetAllString, 
+                (vehicle, vehicleType) => 
+                { 
+                    vehicle.VehicleType = vehicleType; 
+                    return vehicle; 
+                }, splitOn: "VTID");
         }
 
         public Vehicle GetById(int id)
