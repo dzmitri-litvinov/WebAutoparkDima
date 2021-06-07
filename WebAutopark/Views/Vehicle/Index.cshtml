@@ -9,10 +9,24 @@
 <table class="table">
     <thead>
         <tr>
-            <th scope="col">Id</th>
-            <th scope="col">ModelName</th>
-            <th scope="col">VehicleType</th>
-            <th scope="col">MileageKm</th>
+            <th scope="col">
+                Id
+                <a asp-controller="Vehicle" asp-action="Index" asp-route-order="id">↓</a> |
+                <a asp-controller="Vehicle" asp-action="Index" asp-route-order="idDesc">↑</a>
+            </th>
+            <th scope="col">
+                ModelName
+                <a asp-controller="Vehicle" asp-action="Index" asp-route-order="modelName">↓</a> |
+                <a asp-controller="Vehicle" asp-action="Index" asp-route-order="modelNameDesc">↑</a>
+            </th>
+            <th scope="col">VehicleType
+                <a asp-controller="Vehicle" asp-action="Index" asp-route-order="vehicleType">↓</a> |
+                <a asp-controller="Vehicle" asp-action="Index" asp-route-order="vehicleTypeDesc">↑</a>
+            </th>
+            <th scope="col">MileageKm
+                <a asp-controller="Vehicle" asp-action="Index"  asp-route-order="mileageKm">↓</a> |
+                <a asp-controller="Vehicle" asp-action="Index" asp-route-order="mileageKmDesc">↑</a>
+            </th>
         </tr>
     </thead>
 
