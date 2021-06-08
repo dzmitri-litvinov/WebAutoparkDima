@@ -1,0 +1,39 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">OrderId</th>
+            <th scope="col">ModelName</th>
+            <th scope="col">RegNumber</th>
+            <th scope="col">SparePart/Quantity</th>
+        </tr>
+    </thead>
+
+    <tbody>
+
+        <tr>
+            <td>@Model.Id</td>
+            <td>@Model.Vehicle.ModelName</td>
+            <td>@Model.Vehicle.RegistrationNumber</td>
+            <td>
+                <table class="table">
+
+                    <tbody>
+                        @foreach (var orderElement in Model.OrderElements)
+                        {
+                            <tr>
+                                <td>@orderElement.SparePart.PartName</td>
+                                <td>@orderElement.SparePartQuantity</td>                               
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </td>
+        </tr>
+
+    </tbody>
+</table>

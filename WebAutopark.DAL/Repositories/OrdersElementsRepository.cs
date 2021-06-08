@@ -13,7 +13,7 @@ namespace WebAutopark.DAL.Repositories
     {
         private const string sqlQueryCreateString = "INSERT INTO OrdersElements (OrderId, SparePartId, SparePartQuantity) VALUES(@OrderId, @SparePartId, @SparePartQuantity)";
         private const string sqlQueryDeleteString = "DELETE FROM OrdersElements WHERE Id = @id";
-        private const string sqlQueryGetAllString = "SELECT * FROM OrdersElements";
+        private const string sqlQueryGetAllString = "SELECT OE.*, SP.Id SPID, SP.PartName FROM OrdersElements OE, SpareParts SP WHERE OE.SparePartId = SP.Id";
         private const string sqlQueryGetByIdString = "SELECT * FROM OrdersElements WHERE Id = @id";
         private const string sqlQueryUpdateString = "UPDATE OrdersElements SET OrderId = @OrderId, SparePartId = @SparePartId, SparePartQuantity = @SparePartQuantity WHERE Id = @Id";
 
@@ -32,7 +32,12 @@ namespace WebAutopark.DAL.Repositories
 
         public IEnumerable<OrderElement> GetAll()
         {
-            return connection.Query<OrderElement>(sqlQueryGetAllString);
+            return connection.Query<OrderElement, SparePart, OrderElement>(sqlQueryGetAllString,
+                (orderElement, sparePart) =>
+                {
+                    orderElement.SparePart = sparePart;
+                    return orderElement;
+                }, splitOn: "SPID");
         }
 
         public OrderElement GetById(int id)

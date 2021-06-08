@@ -13,7 +13,9 @@ namespace WebAutopark.DAL.Repositories
     {
         private const string sqlQueryCreateString = "INSERT INTO Orders (VehicleId) VALUES(@VehicleId)";
         private const string sqlQueryDeleteString = "DELETE FROM Orders WHERE Id = @id";
-        private const string sqlQueryGetAllString = "SELECT * FROM Orders";
+        private const string sqlQueryGetAllString = "SELECT O.*, V.Id VID, V.VehicleTypeId, V.ModelName, V.RegistrationNumber, V.WeightKg, V.ManufactureYear, " +
+            "V.MileageKm, V.Color, V.Engine, V.EngineCapacity, V.Consumption, V.FuelTankOrBattery " +
+            "FROM Orders O, Vehicles V WHERE O.VehicleId = V.Id";
         private const string sqlQueryGetByIdString = "SELECT * FROM Orders WHERE Id = @id";
         private const string sqlQueryUpdateString = "UPDATE Orders SET VehicleId = @VehicleId WHERE Id = @Id";
 
@@ -32,7 +34,12 @@ namespace WebAutopark.DAL.Repositories
 
         public IEnumerable<Order> GetAll()
         {
-            return connection.Query<Order>(sqlQueryGetAllString);
+            return connection.Query<Order, Vehicle, Order>(sqlQueryGetAllString,
+                (order, vehicle) =>
+                {
+                    order.Vehicle = vehicle;
+                    return order;
+                }, splitOn: "VID");
         }
 
         public Order GetById(int id)
