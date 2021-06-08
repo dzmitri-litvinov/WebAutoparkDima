@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Update Vehicle";
 }
 
 @using WebAutopark.DAL.Entities
@@ -17,7 +17,7 @@
     <br />
     <label>VehicleType:</label>
     <br />
-    @Html.DropDownListFor(e => e.VehicleTypeId, (SelectList)ViewBag.vehicleTypes)
+    @Html.DropDownListFor(e => e.VehicleTypeId, (SelectList)ViewBag.VehicleTypes)
     <br />
     <label>ModelName:</label>
     <br />

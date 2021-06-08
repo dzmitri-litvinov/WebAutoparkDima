@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Vehicle Details";
 }
 
 <table class="table">
@@ -25,8 +25,8 @@
             <td>@Model.VehicleType.TaxCoefficient</td>
             <td>@Model.RegistrationNumber</td>
             <td>@Model.Color</td>
-            <td>@ViewBag.TaxPerMonth</td>
-            <td>@ViewBag.MaxKm</td>
+            <td>@Model.TaxPerMonth.ToString("0.00")</td>
+            <td>@Model.MaxKm.ToString("0.00")</td>
         </tr>
         
     </tbody>

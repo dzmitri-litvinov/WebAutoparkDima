@@ -9,14 +9,14 @@ using Dapper;
 
 namespace WebAutopark.DAL.Repositories
 {
-    public class VehicleRepository : RepositoryBase, IRepository<Vehicle>
+    public class VehicleRepository : RepositoryBase, IVehicleRepository
     {
         private const string sqlQueryCreateString = "INSERT INTO Vehicles (VehicleTypeId, ModelName, RegistrationNumber, WeightKg, " +
             "ManufactureYear, MileageKm, Color, Engine, EngineCapacity, Consumption, FuelTankOrBattery) VALUES(@VehicleTypeId, " +
             "@ModelName, @RegistrationNumber, @WeightKg, @ManufactureYear, @MileageKm, @Color, @Engine, @EngineCapacity, @Consumption, @FuelTankOrBattery)";
         private const string sqlQueryDeleteString = "DELETE FROM Vehicles WHERE Id = @id";
         private const string sqlQueryGetAllString = "SELECT V.*, VT.Id VTID, VT.TypeName, VT.TaxCoefficient FROM Vehicles V INNER JOIN VehicleTypes VT ON V.VehicleTypeId = VT.Id";
-        private const string sqlQueryGetByIdString = "SELECT * FROM Vehicles WHERE Id = @id";
+        private const string sqlQueryGetByIdString = "SELECT V.*, VT.Id VTID, VT.TypeName, VT.TaxCoefficient FROM Vehicles V INNER JOIN VehicleTypes VT ON V.VehicleTypeId = VT.Id WHERE V.Id = @id";
         private const string sqlQueryUpdateString = "UPDATE Vehicles SET VehicleTypeId = @VehicleTypeId, ModelName = @ModelName, " +
             "RegistrationNumber = @RegistrationNumber, WeightKg = @WeightKg, ManufactureYear = @ManufactureYear, MileageKm = @MileageKm, Color = @Color, " +
             "Engine = @Engine, EngineCapacity = @EngineCapacity, Consumption = @Consumption, FuelTankOrBattery = @FuelTankOrBattery WHERE Id = @Id";
@@ -46,12 +46,62 @@ namespace WebAutopark.DAL.Repositories
 
         public Vehicle GetById(int id)
         {
-            return connection.QueryFirst<Vehicle>(sqlQueryGetByIdString, new { id });
+            return connection.Query<Vehicle, VehicleType, Vehicle>(sqlQueryGetByIdString,
+                (vehicle, vehicleType) =>
+                {
+                    vehicle.VehicleType = vehicleType;
+                    return vehicle;
+                }, splitOn: "VTID", param: new { id }).FirstOrDefault();
         }
 
         public void Update(Vehicle instance)
         {
             connection.Execute(sqlQueryUpdateString, instance);
+        }
+
+        public IEnumerable<Vehicle> GetAllOrderBy(string orderingCol, string orderingDir)
+        {
+            return connection.Query<Vehicle, VehicleType, Vehicle>(sqlQueryGetAllString + SqlOrdering(orderingCol, orderingDir),
+                (vehicle, vehicleType) =>
+                {
+                    vehicle.VehicleType = vehicleType;
+                    return vehicle;
+                }, splitOn: "VTID");
+        }
+
+        private string SqlOrdering(string orderingCol, string orderingDir)
+        {
+            string sqlOrdering = "";
+
+            switch (orderingCol)
+            {
+                case "id":
+                    sqlOrdering += " ORDER BY V.Id";
+                    break;
+                case "modelName":
+                    sqlOrdering += " ORDER BY V.ModelName";
+                    break;
+                case "vehicleType":
+                    sqlOrdering += " ORDER BY VT.TypeName";
+                    break;
+                case "mileageKm":
+                    sqlOrdering += " ORDER BY V.MileageKm";
+                    break;
+                default:
+                    orderingDir = "";
+                    break;
+            }
+
+            switch (orderingDir)
+            {
+                case "desc":
+                    sqlOrdering += " DESC";
+                    break;
+                default:
+                    break;
+            }
+
+            return sqlOrdering;
         }
     }
 }

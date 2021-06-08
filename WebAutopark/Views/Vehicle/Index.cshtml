@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Vehicle Home Page";
 }
 
 <div class="d-grid gap-2 d-md-flex justify-content-md-end">
@@ -11,21 +11,21 @@
         <tr>
             <th scope="col">
                 Id
-                <a asp-controller="Vehicle" asp-action="Index" asp-route-order="id">↓</a> |
-                <a asp-controller="Vehicle" asp-action="Index" asp-route-order="idDesc">↑</a>
+                <a asp-controller="Vehicle" asp-action="IndexOrder" asp-route-orderingCol="id">↓</a> |
+                <a asp-controller="Vehicle" asp-action="IndexOrder" asp-route-orderingCol="id" asp-route-orderingDir="desc">↑</a>
             </th>
             <th scope="col">
                 ModelName
-                <a asp-controller="Vehicle" asp-action="Index" asp-route-order="modelName">↓</a> |
-                <a asp-controller="Vehicle" asp-action="Index" asp-route-order="modelNameDesc">↑</a>
+                <a asp-controller="Vehicle" asp-action="IndexOrder" asp-route-orderingCol="modelName">↓</a> |
+                <a asp-controller="Vehicle" asp-action="IndexOrder" asp-route-orderingCol="modelName" asp-route-orderingDir="desc">↑</a>
             </th>
             <th scope="col">VehicleType
-                <a asp-controller="Vehicle" asp-action="Index" asp-route-order="vehicleType">↓</a> |
-                <a asp-controller="Vehicle" asp-action="Index" asp-route-order="vehicleTypeDesc">↑</a>
+                <a asp-controller="Vehicle" asp-action="IndexOrder" asp-route-orderingCol="vehicleType">↓</a> |
+                <a asp-controller="Vehicle" asp-action="IndexOrder" asp-route-orderingCol="vehicleType" asp-route-orderingDir="desc">↑</a>
             </th>
             <th scope="col">MileageKm
-                <a asp-controller="Vehicle" asp-action="Index"  asp-route-order="mileageKm">↓</a> |
-                <a asp-controller="Vehicle" asp-action="Index" asp-route-order="mileageKmDesc">↑</a>
+                <a asp-controller="Vehicle" asp-action="IndexOrder" asp-route-orderingCol="mileageKm">↓</a> |
+                <a asp-controller="Vehicle" asp-action="IndexOrder" asp-route-orderingCol="mileageKm" asp-route-orderingDir="desc">↑</a>
             </th>
         </tr>
     </thead>
@@ -41,7 +41,7 @@
                 <td>
                     <a asp-controller="Vehicle" asp-action="Delete" asp-route-id="@velicle.Id">Delete</a> |
                     <a asp-controller="Vehicle" asp-action="Update" asp-route-id="@velicle.Id">Update</a> |
-                    <a asp-controller="Vehicle" asp-action="GetById" asp-route-id="@velicle.Id">GetById</a>
+                    <a asp-controller="Vehicle" asp-action="Details" asp-route-id="@velicle.Id">Details</a>
                 </td>
             </tr>
         }

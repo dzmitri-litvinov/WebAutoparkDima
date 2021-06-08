@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using WebAutopark.DAL.Interfaces;
 using WebAutopark.DAL.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using WebAutopark.Extentions;
 using System.Text;
 
 namespace WebAutopark.Controllers
@@ -30,7 +29,7 @@ namespace WebAutopark.Controllers
             return View(orders);
         }
 
-        public IActionResult GetById(int id)
+        public IActionResult Details(int id)
         {
             var order = _orderRepository.GetById(id);
             var vehicle = _vehicleRepository.GetById(order.VehicleId);

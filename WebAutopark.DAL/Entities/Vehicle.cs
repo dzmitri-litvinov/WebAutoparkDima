@@ -9,6 +9,8 @@ namespace WebAutopark.DAL.Entities
     public class Vehicle
     {
         private const double TaxWeightCoeff = 0.0013;
+        private const double TypeTaxCoeff = 30;
+        private const double AdditionalTaxCoeff = 5;
         public int Id { get; set; }
         public int VehicleTypeId { get; set; }
         public VehicleType VehicleType { get; set; }
@@ -22,5 +24,7 @@ namespace WebAutopark.DAL.Entities
         public double EngineCapacity { get; set; }
         public double Consumption { get; set; }
         public double FuelTankOrBattery { get; set; }
+        public double TaxPerMonth => WeightKg * TaxWeightCoeff + VehicleType.TaxCoefficient * TypeTaxCoeff + AdditionalTaxCoeff;
+        public double MaxKm => FuelTankOrBattery / Consumption;
     }
 }
