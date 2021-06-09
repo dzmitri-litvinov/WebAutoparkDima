@@ -92,13 +92,9 @@ namespace WebAutopark.DAL.Repositories
                     break;
             }
 
-            switch (orderingDir)
+            if (orderingDir == "desc")
             {
-                case "desc":
-                    sqlOrdering += " DESC";
-                    break;
-                default:
-                    break;
+                sqlOrdering += " DESC";
             }
 
             return sqlOrdering;
