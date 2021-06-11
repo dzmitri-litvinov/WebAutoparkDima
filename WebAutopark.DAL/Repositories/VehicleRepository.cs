@@ -59,7 +59,7 @@ namespace WebAutopark.DAL.Repositories
             connection.Execute(sqlQueryUpdateString, instance);
         }
 
-        public IEnumerable<Vehicle> GetAllOrderBy(string orderingCol, string orderingDir)
+        public IEnumerable<Vehicle> GetAllOrderBy(string orderingCol, OrderingDirection orderingDir)
         {
             return connection.Query<Vehicle, VehicleType, Vehicle>(sqlQueryGetAllString + SqlOrdering(orderingCol, orderingDir),
                 (vehicle, vehicleType) =>
@@ -69,7 +69,7 @@ namespace WebAutopark.DAL.Repositories
                 }, splitOn: "VTID");
         }
 
-        private string SqlOrdering(string orderingCol, string orderingDir)
+        private string SqlOrdering(string orderingCol, OrderingDirection orderingDir)
         {
             string sqlOrdering = "";
 
@@ -88,13 +88,19 @@ namespace WebAutopark.DAL.Repositories
                     sqlOrdering += " ORDER BY V.MileageKm";
                     break;
                 default:
-                    orderingDir = "";
                     break;
             }
 
-            if (orderingDir == "desc")
+            switch (orderingDir)
             {
-                sqlOrdering += " DESC";
+                case OrderingDirection.ASC:
+                    sqlOrdering += " ASC";
+                    break;
+                case OrderingDirection.DESC:
+                    sqlOrdering += " DESC";
+                    break;
+                default:
+                    break;
             }
 
             return sqlOrdering;

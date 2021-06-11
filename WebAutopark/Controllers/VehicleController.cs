@@ -26,7 +26,7 @@ namespace WebAutopark.Controllers
             return View(vehicles);
         }
 
-        public IActionResult IndexOrder(string orderingCol, string orderingDir)
+        public IActionResult IndexOrder(string orderingCol, OrderingDirection orderingDir)
         {
             var vehicles = _vehicleRepository.GetAllOrderBy(orderingCol, orderingDir);
 

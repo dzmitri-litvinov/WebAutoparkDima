@@ -8,6 +8,6 @@ namespace WebAutopark.DAL.Interfaces
 {
     public interface IVehicleRepository : IRepository<Vehicle>
     {
-        IEnumerable<Vehicle> GetAllOrderBy(string orderingCol, string orderingDir);
+        IEnumerable<Vehicle> GetAllOrderBy(string orderingCol, OrderingDirection orderingDir);
     }
 }
