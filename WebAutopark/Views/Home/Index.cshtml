@@ -7,6 +7,8 @@
         <tr>
             <th scope="col">VehicleTypes</th>
             <th scope="col">SpareParts</th>
+            <th scope="col">Vehicle</th>
+            <th scope="col">Orders</th>
             
         </tr>
     </thead>
@@ -18,6 +20,14 @@
 
             <td>
                 <a asp-controller="SparePart" asp-action="Index">Proceed</a>
+            </td>
+
+            <td>
+                <a asp-controller="Vehicle" asp-action="Index">Proceed</a>
+            </td>
+
+            <td>
+                <a asp-controller="Order" asp-action="Index">Proceed</a>
             </td>
         </tr>
     </tbody>

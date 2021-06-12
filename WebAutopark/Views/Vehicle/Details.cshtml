@@ -1,0 +1,37 @@
+﻿@{
+    ViewData["Title"] = "Vehicle Details";
+}
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a asp-controller="Vehicle" asp-action="Index">BackToIndex</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">ModelName</th>
+            <th scope="col">VehicleType</th>
+            <th scope="col">TaxCoeff</th>
+            <th scope="col">RegNumber</th>
+            <th scope="col">Color</th>
+            <th scope="col">TaxPerMonth</th>
+            <th scope="col">MaxKm</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        
+        <tr>
+            <td>@Model.Id</td>
+            <td>@Model.ModelName</td>
+            <td>@Model.VehicleType.TypeName</td>
+            <td>@Model.VehicleType.TaxCoefficient</td>
+            <td>@Model.RegistrationNumber</td>
+            <td>@Model.Color</td>
+            <td>@Model.TaxPerMonth.ToString("0.00")</td>
+            <td>@Model.MaxKm.ToString("0.00")</td>
+        </tr>
+        
+    </tbody>
+</table>

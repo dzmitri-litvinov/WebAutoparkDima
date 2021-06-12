@@ -11,6 +11,7 @@ namespace WebAutopark.DAL.Entities
         public int Id { get; set; }
         public int OrderId { get; set; }
         public int SparePartId { get; set; }
+        public SparePart SparePart { get; set; }
         public int SparePartQuantity { get; set; }
     }
 }

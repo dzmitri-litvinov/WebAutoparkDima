@@ -1,0 +1,49 @@
+﻿@{
+    ViewData["Title"] = "Vehicle Home Page";
+}
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a asp-controller="Vehicle" asp-action="Create">Create</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">
+                Id
+                <a asp-controller="Vehicle" asp-action="IndexOrder" asp-route-orderingCol="id" asp-route-orderingDir="ASC">↓</a> |
+                <a asp-controller="Vehicle" asp-action="IndexOrder" asp-route-orderingCol="id" asp-route-orderingDir="DESC">↑</a>
+            </th>
+            <th scope="col">
+                ModelName
+                <a asp-controller="Vehicle" asp-action="IndexOrder" asp-route-orderingCol="modelName" asp-route-orderingDir="ASC">↓</a> |
+                <a asp-controller="Vehicle" asp-action="IndexOrder" asp-route-orderingCol="modelName" asp-route-orderingDir="DESC">↑</a>
+            </th>
+            <th scope="col">VehicleType
+                <a asp-controller="Vehicle" asp-action="IndexOrder" asp-route-orderingCol="vehicleType" asp-route-orderingDir="ASC">↓</a> |
+                <a asp-controller="Vehicle" asp-action="IndexOrder" asp-route-orderingCol="vehicleType" asp-route-orderingDir="DESC">↑</a>
+            </th>
+            <th scope="col">MileageKm
+                <a asp-controller="Vehicle" asp-action="IndexOrder" asp-route-orderingCol="mileageKm" asp-route-orderingDir="ASC">↓</a> |
+                <a asp-controller="Vehicle" asp-action="IndexOrder" asp-route-orderingCol="mileageKm" asp-route-orderingDir="DESC">↑</a>
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var velicle in Model)
+        {
+            <tr>
+                <td>@velicle.Id</td>
+                <td>@velicle.ModelName</td>
+                <td>@velicle.VehicleType.TypeName</td>
+                <td>@velicle.MileageKm</td>
+                <td>
+                    <a asp-controller="Vehicle" asp-action="Delete" asp-route-id="@velicle.Id">Delete</a> |
+                    <a asp-controller="Vehicle" asp-action="Update" asp-route-id="@velicle.Id">Update</a> |
+                    <a asp-controller="Vehicle" asp-action="Details" asp-route-id="@velicle.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

@@ -1,0 +1,32 @@
+﻿@{
+    ViewData["Title"] = "Order Home Page";
+}
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a asp-controller="Order" asp-action="Create">Create</a>
+</div>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">Id</th>
+            <th scope="col">ModelName</th>
+            <th scope="col">VehicleRegNumber</th>
+            <th scope="col">Actions</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var order in Model)
+        {
+            <tr>
+                <td>@order.Id</td>
+                <td>@order.Vehicle.ModelName</td>
+                <td>@order.Vehicle.RegistrationNumber</td>
+                <td>
+                   <a asp-controller="Order" asp-action="Details" asp-route-id="@order.Id">Details</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
