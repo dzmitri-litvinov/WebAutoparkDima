@@ -14,7 +14,7 @@ namespace WebAutopark.DAL.Repositories
         private const string sqlQueryCreateString = "INSERT INTO Orders (VehicleId) VALUES(@VehicleId)";
         private const string sqlQueryCreateAndReturnIdString = "INSERT INTO Orders (VehicleId) VALUES(@VehicleId); SELECT CAST(SCOPE_IDENTITY() as int)";
         private const string sqlQueryDeleteString = "DELETE FROM Orders WHERE Id = @id";
-        private const string sqlGettAllString = "SELECT O.*, " +
+        private const string sqlGetAllString = "SELECT O.*, " +
                                                     "V.Id VID, V.VehicleTypeId, V.ModelName, V.RegistrationNumber, V.WeightKg, " +
                                                     "V.ManufactureYear, V.MileageKm, V.Color, V.Engine, V.EngineCapacity, V.Consumption, V.FuelTankOrBattery, " +
                                                     "OE.Id OEID, OE.OrderId, OE.SparePartId, OE.SparePartQuantity, " +
@@ -27,7 +27,7 @@ namespace WebAutopark.DAL.Repositories
                                                                 "V.MileageKm, V.Color, V.Engine, V.EngineCapacity, V.Consumption, V.FuelTankOrBattery " +
                                                                 "FROM Orders O " +
                                                                 "JOIN Vehicles V ON O.VehicleId = V.Id";
-        private const string sqlGettByIdString = "SELECT O.*, " +
+        private const string sqlGetByIdString = "SELECT O.*, " +
                                                     "V.Id VID, V.VehicleTypeId, V.ModelName, V.RegistrationNumber, V.WeightKg, " +
                                                     "V.ManufactureYear, V.MileageKm, V.Color, V.Engine, V.EngineCapacity, V.Consumption, V.FuelTankOrBattery, " +
                                                     "OE.Id OEID, OE.OrderId, OE.SparePartId, OE.SparePartQuantity, " +
@@ -73,7 +73,7 @@ namespace WebAutopark.DAL.Repositories
 
         public Order GetById(int id)
         {
-            var coll = connection.Query<Order, Vehicle, OrderElement, SparePart, Order>(sqlGettByIdString,
+            var coll = connection.Query<Order, Vehicle, OrderElement, SparePart, Order>(sqlGetByIdString,
                 (order, vehicle, orderElement, sparePart) =>
                 {
                     order.Vehicle = vehicle;
