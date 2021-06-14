@@ -7,21 +7,24 @@ using WebAutopark.DAL.Interfaces;
 using WebAutopark.DAL.Entities;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Text;
+using WebAutopark.Models;
 
 namespace WebAutopark.Controllers
 {
     public class OrderController : Controller
     { 
 
-        private readonly IRepository<Order> _orderRepository;
-        private readonly IRepository<OrderElement> _orderElementRepository;
-        private readonly IRepository<Vehicle> _vehicleRepository;
+        private readonly IOrderRepository _orderRepository;
+        private readonly IOrdersElementsRepository _orderElementRepository;
+        private readonly IVehicleRepository _vehicleRepository;
+        private readonly IRepository<SparePart> _sparePartRepository;
 
-        public OrderController(IRepository<Order> orderRepository, IRepository<OrderElement> orderElementRepository, IRepository<Vehicle> vehicleRepository)
+        public OrderController(IOrderRepository orderRepository, IOrdersElementsRepository orderElementRepository, IVehicleRepository vehicleRepository, IRepository<SparePart> sparePartRepository)
         {
             _orderRepository = orderRepository;
             _orderElementRepository = orderElementRepository;
             _vehicleRepository = vehicleRepository;
+            _sparePartRepository = sparePartRepository;
         }
         public IActionResult Index()
         {
@@ -32,13 +35,42 @@ namespace WebAutopark.Controllers
         public IActionResult Details(int id)
         {
             var order = _orderRepository.GetById(id);
-            var vehicle = _vehicleRepository.GetById(order.VehicleId);
-            order.Vehicle = vehicle;
-            var ordersElements = _orderElementRepository.GetAll();
-
-            order.OrderElements = ordersElements.Where(o => o.OrderId == id).ToList();
                         
             return View(order);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            AddVehicleSelectListToViewBag();
+            return View();
+        }
+        public IActionResult Delete(int id)
+        {
+            _orderRepository.Delete(id);
+            return RedirectToAction("Index");
+        }
+
+        [HttpPost]
+        public IActionResult Create(Order order)
+        {
+            int orderId = _orderRepository.CreateAndReturnId(order);
+            OrderElementAddModel orderElementAdd = new OrderElementAddModel { Order = _orderRepository.GetById(orderId) };
+            AddSparePartSelectListToViewBag();
+
+            return View("../OrderElement/Create", orderElementAdd);
+        }
+
+        private void AddVehicleSelectListToViewBag()
+        {
+            var vehicleTypes = _vehicleRepository.GetAll();
+            ViewBag.Vehicles = new SelectList(vehicleTypes, "Id", "ModelName");
+        }
+
+        private void AddSparePartSelectListToViewBag()
+        {
+            var spareParts = _sparePartRepository.GetAll();
+            ViewBag.SpareParts = new SelectList(spareParts, "Id", "PartName");
         }
     }
 }
