@@ -34,7 +34,7 @@ namespace WebAutopark.Controllers
         public IActionResult Create(int orderId)
         {
             OrderElementModel orderElementModel = new OrderElementModel { Order = _orderRepository.GetById(orderId), OrderElement = null };
-            AddSparePartSelectListToViewBag();
+            ViewBagHelper.AddSparePartSelectListToViewBag(_sparePartRepository, ViewBag);
 
             return View(orderElementModel);
         }
@@ -50,7 +50,7 @@ namespace WebAutopark.Controllers
                 return RedirectToAction("Index", "Order");
             }
 
-            AddSparePartSelectListToViewBag();
+            ViewBagHelper.AddSparePartSelectListToViewBag(_sparePartRepository, ViewBag);
             orderElementModel = new OrderElementModel
             {
                 Order = _orderRepository.GetById(orderId)
@@ -58,12 +58,6 @@ namespace WebAutopark.Controllers
             orderElementModel.Order.OrderElements = _orderElementRepository.GetAllByOrderId(orderId).ToList();
 
             return View(orderElementModel);
-        }
-
-        protected void AddSparePartSelectListToViewBag()
-        {
-            var spareParts = _sparePartRepository.GetAll();
-            ViewBag.SpareParts = new SelectList(spareParts, "Id", "PartName");
         }
     }
 }

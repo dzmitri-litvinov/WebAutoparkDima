@@ -42,7 +42,7 @@ namespace WebAutopark.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            AddVehicleSelectListToViewBag();
+            ViewBagHelper.AddVehicleSelectListToViewBag(_vehicleRepository, ViewBag);
             return View();
         }
         public IActionResult Delete(int id)
@@ -57,12 +57,6 @@ namespace WebAutopark.Controllers
             int orderId = _orderRepository.CreateAndReturnId(order);
 
             return RedirectToAction("Create", "OrderElement", new { orderId =  orderId});
-        }
-
-        protected void AddVehicleSelectListToViewBag()
-        {
-            var vehicleTypes = _vehicleRepository.GetAll();
-            ViewBag.Vehicles = new SelectList(vehicleTypes, "Id", "ModelName");
         }
     }
 }

@@ -11,10 +11,16 @@ namespace WebAutopark.Controllers
 {
     public static class ViewBagHelper
     {
-        public static void AddSparePartSelectListToViewBag(IRepository<SparePart> _sparePartRepository, dynamic VB)
+        public static void AddSparePartSelectListToViewBag(IRepository<SparePart> _sparePartRepository, dynamic viewBag)
         {
             var spareParts = _sparePartRepository.GetAll();
-            VB = new SelectList(spareParts, "Id", "PartName");
+            viewBag.SpareParts = new SelectList(spareParts, "Id", "PartName");
+        }
+
+        public static void AddVehicleSelectListToViewBag(IVehicleRepository _vehicleRepository, dynamic viewBag)
+        {
+            var vehicleTypes = _vehicleRepository.GetAll();
+            viewBag.Vehicles = new SelectList(vehicleTypes, "Id", "ModelName");
         }
     }
 }
