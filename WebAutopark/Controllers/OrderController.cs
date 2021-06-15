@@ -15,14 +15,14 @@ namespace WebAutopark.Controllers
     { 
 
         private readonly IOrderRepository _orderRepository;
-        private readonly IOrdersElementsRepository _orderElementRepository;
         private readonly IVehicleRepository _vehicleRepository;
         private readonly IRepository<SparePart> _sparePartRepository;
 
-        public OrderController(IOrderRepository orderRepository, IOrdersElementsRepository orderElementRepository, IVehicleRepository vehicleRepository, IRepository<SparePart> sparePartRepository)
+        public OrderController(IOrderRepository orderRepository, 
+                                IVehicleRepository vehicleRepository, 
+                                IRepository<SparePart> sparePartRepository)
         {
             _orderRepository = orderRepository;
-            _orderElementRepository = orderElementRepository;
             _vehicleRepository = vehicleRepository;
             _sparePartRepository = sparePartRepository;
         }
@@ -55,22 +55,14 @@ namespace WebAutopark.Controllers
         public IActionResult Create(Order order)
         {
             int orderId = _orderRepository.CreateAndReturnId(order);
-            OrderElementAddModel orderElementAdd = new OrderElementAddModel { Order = _orderRepository.GetById(orderId) };
-            AddSparePartSelectListToViewBag();
 
-            return View("../OrderElement/Create", orderElementAdd);
+            return RedirectToAction("Create", "OrderElement", new { orderId =  orderId});
         }
 
-        private void AddVehicleSelectListToViewBag()
+        protected void AddVehicleSelectListToViewBag()
         {
             var vehicleTypes = _vehicleRepository.GetAll();
             ViewBag.Vehicles = new SelectList(vehicleTypes, "Id", "ModelName");
-        }
-
-        private void AddSparePartSelectListToViewBag()
-        {
-            var spareParts = _sparePartRepository.GetAll();
-            ViewBag.SpareParts = new SelectList(spareParts, "Id", "PartName");
         }
     }
 }

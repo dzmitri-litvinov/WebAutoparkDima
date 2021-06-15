@@ -6,8 +6,8 @@ using WebAutopark.DAL.Entities;
 
 namespace WebAutopark.DAL.Interfaces
 {
-    public interface IOrdersElementsRepository : IRepository<OrderElement>
+    public interface IOrderElementsRepository : IRepository<OrderElement>
     {
-        IEnumerable<OrderElement> GettAllByOrderId(int id);
+        IEnumerable<OrderElement> GetAllByOrderId(int id);
     }
 }

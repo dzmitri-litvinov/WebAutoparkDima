@@ -3,7 +3,7 @@
 }
 
 @using WebAutopark.DAL.Entities
-@model WebAutopark.Models.OrderElementAddModel
+@model WebAutopark.Models.OrderElementModel
 
     <div class="d-grid gap-2 d-md-flex justify-content-md-end">
         <a asp-controller="Order" asp-action="Index">BackToIndex</a>
@@ -49,15 +49,15 @@
 {
     <label>OrderId:</label>
     <br />
-    @Html.TextBoxFor(e => e.OrderElementToAdd.OrderId, new {placeholder = Model.Order.Id, @readonly = "readonly" })
+    @Html.TextBoxFor(e => e.OrderElement.OrderId, new {placeholder = Model.Order.Id, @readonly = "readonly" })
     <br />
     <label>SparePart:</label>
     <br />
-    @Html.DropDownListFor(e => e.OrderElementToAdd.SparePartId, (SelectList)ViewBag.SpareParts)
+    @Html.DropDownListFor(e => e.OrderElement.SparePartId, (SelectList)ViewBag.SpareParts)
     <br />
     <label>SparePartQuantity:</label>
     <br />
-    @Html.TextBoxFor(e => e.OrderElementToAdd.SparePartQuantity)
+    @Html.TextBoxFor(e => e.OrderElement.SparePartQuantity)
     <br />
     <input name="action" value="CreateAndExit" type="submit" asp-controller="OrderElement" asp-action="Create" asp-route-orderId="@Model.Order.Id"/>
     <input name="action" value="CreateAndProceed" type="submit" asp-controller="OrderElement" asp-action="Create" asp-route-orderId="@Model.Order.Id"/>

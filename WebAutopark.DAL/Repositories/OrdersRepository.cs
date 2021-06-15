@@ -12,7 +12,7 @@ namespace WebAutopark.DAL.Repositories
     public class OrdersRepository : RepositoryBase, IOrderRepository
     {
         private const string sqlQueryCreateString = "INSERT INTO Orders (VehicleId) VALUES(@VehicleId)";
-        private const string sqlQueryCreateAndReturnIdString = "INSERT INTO Orders (VehicleId) VALUES(@VehicleId); SELECT CAST(SCOPE_IDENTITY() as int)";
+        private const string sqlQueryCreateAndReturnIdString = "INSERT INTO Orders (VehicleId) OUTPUT INSERTED.Id VALUES(@VehicleId)";
         private const string sqlQueryDeleteString = "DELETE FROM Orders WHERE Id = @id";
         private const string sqlGetAllString = "SELECT O.*, " +
                                                     "V.Id VID, V.VehicleTypeId, V.ModelName, V.RegistrationNumber, V.WeightKg, " +
@@ -20,7 +20,7 @@ namespace WebAutopark.DAL.Repositories
                                                     "OE.Id OEID, OE.OrderId, OE.SparePartId, OE.SparePartQuantity, " +
                                                     "SP.ID SPID, SP.PartName " +
                                                     "FROM Orders O " +
-                                                        "FULL JOIN OrdersElements OE ON O.Id = OE.OrderId " +
+                                                        "LEFT JOIN OrderElements OE ON O.Id = OE.OrderId " +
                                                         "JOIN Vehicles V ON O.VehicleId = V.Id " +
                                                         "LEFT JOIN SpareParts SP ON OE.SparePartId = SP.Id";
         private const string sqlGetAllOrderWithoutElements = "SELECT O.*, V.Id VID, V.VehicleTypeId, V.ModelName, V.RegistrationNumber, V.WeightKg, V.ManufactureYear, " +
@@ -33,7 +33,7 @@ namespace WebAutopark.DAL.Repositories
                                                     "OE.Id OEID, OE.OrderId, OE.SparePartId, OE.SparePartQuantity, " +
                                                     "SP.ID SPID, SP.PartName " +
                                                     "FROM Orders O " +
-                                                        "FULL JOIN OrdersElements OE ON O.Id = OE.OrderId " +
+                                                        "LEFT JOIN OrderElements OE ON O.Id = OE.OrderId " +
                                                         "JOIN Vehicles V ON O.VehicleId = V.Id " +
                                                         "LEFT JOIN SpareParts SP ON OE.SparePartId = SP.Id WHERE O.Id = @id";
 

@@ -6,9 +6,9 @@ using WebAutopark.DAL.Entities;
 
 namespace WebAutopark.Models
 {
-    public class OrderElementAddModel
+    public class OrderElementModel
     {
         public Order Order { get; set; }
-        public OrderElement OrderElementToAdd { get; set; }
+        public OrderElement OrderElement { get; set; }
     }
 }

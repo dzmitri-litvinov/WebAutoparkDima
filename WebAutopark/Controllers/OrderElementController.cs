@@ -14,10 +14,12 @@ namespace WebAutopark.Controllers
     public class OrderElementController : Controller
     {
         private readonly IOrderRepository _orderRepository;
-        private readonly IOrdersElementsRepository _orderElementRepository;
+        private readonly IOrderElementsRepository _orderElementRepository;
         private readonly IRepository<SparePart> _sparePartRepository;
 
-        public OrderElementController(IOrderRepository orderRepository, IOrdersElementsRepository orderElementRepository, IRepository<SparePart> sparePartRepository)
+        public OrderElementController(IOrderRepository orderRepository, 
+                                        IOrderElementsRepository orderElementRepository, 
+                                        IRepository<SparePart> sparePartRepository)
         {
             _orderRepository = orderRepository;
             _orderElementRepository = orderElementRepository;
@@ -29,35 +31,36 @@ namespace WebAutopark.Controllers
         }
 
         [HttpGet]
-        public IActionResult Create(OrderElementAddModel orderElementAdd)
+        public IActionResult Create(int orderId)
         {
-            AddSparePartSelectListToViewBag();            
+            OrderElementModel orderElementModel = new OrderElementModel { Order = _orderRepository.GetById(orderId), OrderElement = null };
+            AddSparePartSelectListToViewBag();
 
-            return View(orderElementAdd);
+            return View(orderElementModel);
         }
 
         [HttpPost]
-        public IActionResult Create(OrderElementAddModel orderElementAdd, string action, int orderId)
+        public IActionResult Create(OrderElementModel orderElementModel, string action, int orderId)
         {
-            orderElementAdd.OrderElementToAdd.OrderId = orderId;
-            _orderElementRepository.Create(orderElementAdd.OrderElementToAdd);
-            AddSparePartSelectListToViewBag();
+            orderElementModel.OrderElement.OrderId = orderId;
+            _orderElementRepository.Create(orderElementModel.OrderElement);
 
             if (action == "CreateAndExit")
             {
                 return RedirectToAction("Index", "Order");
             }
 
-            orderElementAdd = new OrderElementAddModel
+            AddSparePartSelectListToViewBag();
+            orderElementModel = new OrderElementModel
             {
                 Order = _orderRepository.GetById(orderId)
             };
-            orderElementAdd.Order.OrderElements = _orderElementRepository.GettAllByOrderId(orderId).ToList();
+            orderElementModel.Order.OrderElements = _orderElementRepository.GetAllByOrderId(orderId).ToList();
 
-            return View(orderElementAdd);
+            return View(orderElementModel);
         }
 
-        private void AddSparePartSelectListToViewBag()
+        protected void AddSparePartSelectListToViewBag()
         {
             var spareParts = _sparePartRepository.GetAll();
             ViewBag.SpareParts = new SelectList(spareParts, "Id", "PartName");

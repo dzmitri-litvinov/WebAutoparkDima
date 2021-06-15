@@ -31,7 +31,7 @@ namespace WebAutopark
             services.AddTransient<IVehicleRepository, VehicleRepository>(provider => new VehicleRepository(connectionString));
             services.AddTransient<IRepository<SparePart>, SparePartsRepository>(provider => new SparePartsRepository(connectionString));
             services.AddTransient<IOrderRepository, OrdersRepository>(provider => new OrdersRepository(connectionString));
-            services.AddTransient<IOrdersElementsRepository, OrdersElementsRepository>(provider => new OrdersElementsRepository(connectionString));
+            services.AddTransient<IOrderElementsRepository, OrderElementsRepository>(provider => new OrderElementsRepository(connectionString));
             services.AddControllersWithViews();
         }
 
