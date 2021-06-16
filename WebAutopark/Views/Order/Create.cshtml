@@ -1,0 +1,19 @@
+﻿@{
+    ViewData["Title"] = "Create Order";
+}
+
+@using WebAutopark.DAL.Entities
+@model WebAutopark.DAL.Entities.Order
+
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a asp-controller="Order" asp-action="Index">BackToIndex</a>
+</div>
+
+@using (Html.BeginForm("Create", "Order", FormMethod.Post))
+{
+    <label>Vehicle:</label>
+    <br />
+    @Html.DropDownListFor(e => e.VehicleId, (SelectList)ViewBag.Vehicles)
+    <br />
+    <input type="submit" value="Create" />
+}

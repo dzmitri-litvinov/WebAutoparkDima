@@ -2,6 +2,10 @@
     ViewData["Title"] = "Order Details";
 }
 
+<div class="d-grid gap-2 d-md-flex justify-content-md-end">
+    <a asp-controller="Order" asp-action="Index">BackToIndex</a>
+</div>
+
 <table class="table">
     <thead>
         <tr>
@@ -22,12 +26,22 @@
                 <table class="table">
 
                     <tbody>
-                        @foreach (var orderElement in Model.OrderElements)
+                        @if (Model.OrderElements != null)
                         {
-                            <tr>
-                                <td>@orderElement.SparePart.PartName</td>
-                                <td>@orderElement.SparePartQuantity</td>                               
-                            </tr>
+                            @foreach (var orderElement in Model.OrderElements)
+                            {
+                                <tr>
+                                    <td>@orderElement.SparePart.PartName</td>
+                                    <td>@orderElement.SparePartQuantity</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                                <tr>
+                                    <td>Order is empty</td>
+                                    <td><a asp-controller="Order" asp-action="Delete" asp-route-id="@Model.Id">DeleteOrder</a></td>
+                                </tr>
                         }
                     </tbody>
 
